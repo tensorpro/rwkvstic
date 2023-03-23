@@ -72,7 +72,7 @@ class Block(RwkvModule):
                 xy = self.ln1(x)
 
                 tc = xy.roll(1, 0)
-                rmc = tc[0].clone()
+                rmc = tc[0].copy()
                 tc[0] = state[0]
                 state[0] = rmc
 
@@ -94,7 +94,7 @@ class Block(RwkvModule):
                 ddd = self.ln2(rz)
 
                 rc = ddd.roll(1, 0)
-                dc = rc[0].clone()
+                dc = rc[0].copy()
                 rc[0] = state[1]
                 state[1] = dc
 
