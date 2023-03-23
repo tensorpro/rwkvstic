@@ -66,7 +66,7 @@ class RWKVMaster():
                 print(len(newctx)/ll * 100, "%", "remaining")
                 m = newctx[:btch]
                 newctx = newctx[btch:]
-                o = model.forward(m, o[1].clone())
+                o = model.forward(m, o[1].copy())
                 progressCallBack(m)
                 
 
@@ -116,7 +116,7 @@ class RWKVMaster():
         self.lastToken = state[1]
 
     def getState(self):
-        return self.myState.clone(), self.lastToken
+        return self.myState.copy(), self.lastToken
 
     def resetState(self):
         self.myState = self.emptyState.copy()
