@@ -15,6 +15,7 @@ class RWKVNumpyOps(RWKVOp.module):
         self.relu = lambda x: np.maximum(x, 0)
         self.exp = np.exp
         self.stack = lambda x: x
+        self.unsqueeze = lambda x, axis: np.expand_dims(x, axis)
         self.matvec = lambda x, y: np.matmul(x, y.T).T
         self.prod = lambda x: np.prod(x, axis=1)
         self.lerp = lambda x, y, z: x*(1-z) + y*(z)
@@ -159,6 +160,7 @@ class RWKVJaxOps(RWKVOp.module):
         else:
             self.initTensor = lambda x: npjax.array(
                 x.float().cpu().numpy(), dtype=dtype)
+        self.unsqueeze = lambda x, axis: npjax.expand_dims(x, axis)
         self.sqrt = lambda x: npjax.sqrt(x)
         self.mean = npjax.mean
         self.relu = lambda x: npjax.maximum(x, 0)
