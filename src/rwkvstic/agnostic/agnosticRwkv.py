@@ -4,9 +4,9 @@ import torch
 # allow tensor core ops
 torch.backends.cudnn.benchmark = True
 # allow fp16 ops
-torch.backends.cudnn.allow_tf32 = True
+torch.backends.cudnn.allow_tf32 = False
 # allow use of cuDNN
-torch.backends.cudnn.enabled = True
+torch.backends.cudnn.enabled = False
 
 
 def AgnosticRWKV(ops: module, *args):
@@ -181,7 +181,7 @@ def AgnosticRWKV(ops: module, *args):
                     x, state[i], i)
                 state = self.scatter(state, i, rstate)
 
-            x = self.matvec(self.postprocess2, self.layernorm(self.pop(x).unsqueeze(0), self.postprocess0,
+            x = self.matvec(self.postprocess2, self.layernorm(self.unsqueeze(self.pop(x), 0), self.postprocess0,
                                                               self.postprocess1)).squeeze()
 
             return self.postProcessTensor(x), state
